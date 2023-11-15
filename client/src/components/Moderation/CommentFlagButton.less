@@ -1,0 +1,43 @@
+@import "../../assets/style.less";
+@flagIcon: "src/assets/flag_white.png";
+.Unclicked {
+  background-image: url(@flagIcon);
+  //image: url("../../assets/flag_white.png");
+  background-size: cover;
+  background-color: transparent;
+  //padding: 0.80em 1.6em; /* Some padding */
+  width: 4em; /* Set a width if needed */
+  height: 3em;
+  display: block; /* Make the buttons appear below each other */
+}
+
+.Clicked {
+  background-image: url("src/assets/flag_red.png");
+  //image: url("../../assets/flag_white.png");
+  background-size: cover;
+  background-color: transparent;
+  //padding: 0.80em 1.6em; /* Some padding */
+  width: 4em; /* Set a width if needed */
+  height: 3em;
+  display: block; /* Make the buttons appear below each other */
+}
+
+.ant-btn.flag{
+  @flagIcon = "src/assets/flag_white.png";
+  width: 60%;
+  height: 95%;
+  border: 0px;
+  left: 3px;
+  top: 2px;
+  //background-color: rgb(255, 0, 0);
+  background-color:  transparent;
+
+  &:hover {
+    //background-color: rgb(255, 0, 0);
+    background-color:  transparent;
+  }
+  &:focus {
+    //background-color: rgb(255, 0, 0);
+    background-color: transparent;
+  }
+}

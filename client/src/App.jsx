@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from './Utils/PrivateRoute';
 import About from './views/About/About';
+import Administrator from './views/Administrator/Administrator';
 import BlocklyPage from './views/BlocklyPage/BlocklyPage';
 import BugReport from './views/BugReport/BugReport';
 import ContentCreator from './views/ContentCreator/ContentCreator';
@@ -20,6 +21,7 @@ import ForgetPassword from './views/TeacherLogin/ForgetPassword';
 import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import Gallery from './views/Gallery/Gallery';
+import GalleryAdmin from './views/Administrator/GalleryAdmin';
 
 const App = () => {
   return (
@@ -34,6 +36,9 @@ const App = () => {
         <Route path='/replay/:saveID' element={<Replay />} />
         <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
         <Route path='/gallery' element={<Gallery />} />
+        <Route path='/galleryadmin' element={<GalleryAdmin />} />
+        <Route path='/administrator' element={<Administrator />} />
+
         <Route
           path='/report'
           element={
@@ -115,7 +120,7 @@ const App = () => {
           }
         />
         <Route path='/bugreport' element={<BugReport />} />
-        <Route path='*' element={<NotFound/>} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
   );

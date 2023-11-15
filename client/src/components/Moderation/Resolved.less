@@ -1,0 +1,76 @@
+@import "../../assets/style.less";
+// Style sheet for Resolved Tab
+// Table styling inspired by https://github.com/chrisblakely01/react-creating-a-table/blob/main/src/App.css
+
+// Styling for table
+.table-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 1rem;
+  float: left;
+  width: 50%
+}
+
+table {
+  border-collapse: collapse;
+  width:100%;
+}
+
+td {
+  text-align: left;
+  padding: 8px;
+  font-size: 32px;
+  border: 1px solid #ffffff;
+}
+
+th {
+  text-align: left;
+  padding: 8px;
+  font-size: 32px;
+  background-color: rgb(117, 201, 250);
+  border: 1px solid #ffffff;
+}
+
+tr.approved {
+  background-color: lightgreen;
+}
+
+tr.approved:hover {
+  background-color: rgb(171, 238, 171);
+}
+
+tr.rejected {
+  background-color: lightcoral;
+}
+
+tr.rejected:hover {
+  background-color: rgb(237, 150, 150);
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
+
+form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form * {
+  font-size: 28px;
+}
+
+// Styling for right column
+h1 {
+  font-size: xxx-large;
+}
+
+h2 {
+  font-size: xx-large;
+}
+
+h3 {
+  font-size: x-large;
+}
