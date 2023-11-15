@@ -1,0 +1,49 @@
+@import "../../assets/style.less";
+
+.ActionButtons {
+  padding: 0.80em 1.6em; /* Some padding */
+  width: 13em; /* Set a width if needed */
+  display: block; /* Make the buttons appear below each other */
+}
+
+.ant-btn.approve {
+  width: 100%;
+  border-radius: 2em;
+  border: 0px;
+  font-weight: bold;
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+  background-color:  rgb(88, 199, 92);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.65);
+    background-color:  rgb(123, 235, 127);
+    border-color: rgb(123, 235, 127);
+  }
+  &:focus {
+    color: rgba(0, 0, 0, 0.65);
+    background-color:  rgba(255, 255, 255, 0.95);
+    border-color:  rgba(255, 255, 255, 0.95); 
+  }
+}
+
+.ant-btn.reject {
+  width: 100%;
+  border-radius: 2em;
+  border: 0px;
+  font-weight: bold;
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+  background-color:  rgb(231, 51, 51);
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.65);
+    background-color:  rgb(255, 107, 107);
+    border-color: rgb(255, 107, 107);
+  }
+  &:focus {
+    color: rgba(0, 0, 0, 0.65);
+    background-color:  rgba(255, 255, 255, 0.95);
+    border-color:  rgba(255, 255, 255, 0.95); 
+  }
+}
