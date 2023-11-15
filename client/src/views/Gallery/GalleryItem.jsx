@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import './GalleryItem.less';
 import Like from './like';
+import Fork from './Fork';
 import DiscussionBoard from './DiscussionBoard';
 
 //Wrapper item needs to be a useState for it to get dynamically rendered
@@ -50,9 +51,10 @@ const GalleryItem = (props) => {
                 <div className='flex flex-row'>
                     <div className='flex flex-column'>
                         <p>Creator:</p>
-                        <p>Creator Name</p>
+                        <p>{props.item.User_name}</p>
                         <p>Posted:</p>
-                        <p>Posted Date</p>
+                        <p>{props.item.PostedTime}</p>
+                        <p>Views: {viewCounts}</p>
                     </div>
                     <div className='flex flex-column justify-end'>
                         <p>7  5</p>
@@ -76,6 +78,8 @@ const GalleryItem = (props) => {
                         </div>
                         <div className='flex flex-column'>
                             <DiscussionBoard />
+                            <Like> </Like>
+							<Fork props={props} />
                         </div>
 
                     </div>

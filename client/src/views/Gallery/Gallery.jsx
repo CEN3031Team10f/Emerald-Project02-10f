@@ -31,7 +31,6 @@ const Gallery = () => {
             <div key={directory.Id}>
                 <GalleryItem item={directory}
                     Id={directory.Id}
-
                 />
             </div>
         );
