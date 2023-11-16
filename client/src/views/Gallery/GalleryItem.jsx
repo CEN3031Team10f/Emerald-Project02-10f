@@ -3,6 +3,8 @@ import { Modal } from 'antd';
 import './GalleryItem.less';
 import Like from './like';
 import Fork from './Fork';
+import thumbnailImage from './thumbnail.png';
+import thumbnailsImage from './thumbnails.png';
 import DiscussionBoard from './DiscussionBoard';
 
 //Wrapper item needs to be a useState for it to get dynamically rendered
@@ -47,7 +49,7 @@ const GalleryItem = (props) => {
         <>
             <div className='galleryItem' tabIndex={0} onClick={() => { showModal() }}>
                 <div className='header'><div>{title}</div></div>
-                <img style={{ backgroundColor: 'red' }} />
+<img src={thumbnailsImage} style={{ backgroundColor: 'red' }} />
                 <div className='flex flex-row'>
                     <div className='flex flex-column'>
                         <p>Creator:</p>
@@ -74,7 +76,7 @@ const GalleryItem = (props) => {
                 >
                     <div className='flex flex-row'>
                         <div className='flex flex-column'>
-                            <img className='ooIMG'></img>
+                            <img src={thumbnailImage} className='ooIMG'></img>
                         </div>
                         <div className='flex flex-column'>
                             <DiscussionBoard />
