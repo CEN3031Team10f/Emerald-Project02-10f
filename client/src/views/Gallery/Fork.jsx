@@ -16,12 +16,13 @@ function Fork({props})
 	function handleFork(e)
 	{
 		//navigate to  /sandbox
+		//Should pass xml to the sandbox
 		alert("fork button is clicked");
 		navigate('/sandbox');
 	}
 	
 	/*
-	//form Student.jsx
+	//form Student.jsx probably not useful 
 	  const [learningStandard, setLessonModule] = useState({});
 	
 	useEffect(() => {
@@ -41,14 +42,10 @@ function Fork({props})
   }, []);
 	*/
 	return(
-	<>
 
 	<button className="fork-button" onClick={(e) => { handleFork(e) }}>
                 <img src={forkImage} alt="Fork" />
-     </button>
-
-	</>
-	
+    </button>
 	
 	);
 }export default Fork;

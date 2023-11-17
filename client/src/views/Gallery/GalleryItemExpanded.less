@@ -1,0 +1,113 @@
+p#notFound>a {
+    text-decoration: underline;
+}
+
+button.like-button {
+    max-width: 50px;
+    max-height: 50px;
+
+    &>img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+button.share-button {
+    max-width: 50px;
+    max-height: 50px;
+
+    &>img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+button.fork-button {
+    max-width: 50px;
+    max-height: 50px;
+
+    &>img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
+
+div.pageHeader {
+    background-color: #5BABDE;
+    border-radius: 80px;
+    width: 50%;
+    min-height: 4vh;
+    color: #FFFFFF;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    margin-bottom: 2rem;
+
+    &>h1 {
+        color: #FFFFFF;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.ooIMG {
+    min-width: 30dvw;
+    width: auto;
+    height: auto;
+    aspect-ratio: 2/3;
+    background-color: red;
+    border-radius: 15px;
+    max-height: 75vh;
+}
+
+.return-button {
+    height: 100%;
+    width: 50px;
+    background-color: #5BABDE;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+    transition: width 0.5s ease;
+
+    &>p {
+        transform: rotate(90deg);
+        font-size: 2rem;
+        margin: 0;
+        width: 0;
+        height: 50px;
+        text-wrap: nowrap;
+        color: #FFFFFF;
+        margin-top: 10vh;
+    }
+
+    &:hover {
+        width: 100px;
+    }
+}
+
+.content-col {
+    align-content: center;
+    width: calc(100% - 50px);
+    flex-wrap: wrap;
+}
+
+.discussion-col {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    padding: 15px;
+    width: auto;
+    min-width: 45dvw;
+    margin-left: 5%;
+    max-height: 75vh;
+    height: auto;
+}
+
+div.buttons-row > div {
+    display: flex;
+    flex-direction: row; 
+    //align-items: center; 
+   margin-right: 20px;
+	gap: 10px;
+}
