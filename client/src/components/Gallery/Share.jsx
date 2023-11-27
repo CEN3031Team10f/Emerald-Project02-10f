@@ -18,8 +18,8 @@ function Share({ title }) {
 
 	function handleShare(e) {
 		const shareData = {
-			title: 'CASMM: ' + title,
-			text: 'Check out this awesome code I made using CASMM!',
+			title: 'CodeSparks: ' + title,
+			text: 'Check out this awesome code I made using CodeSparks!',
 			url: shareLink,
 		};
 		if (navigator.canShare(shareData)) {
@@ -60,8 +60,8 @@ function Share({ title }) {
 							<img src={thumbnailsImage} style={{ height: '200px' }} />
 						</div>
 						<div className='flex flex-column' style={{ 'margin-left': '30px' }}>
-							<h1 style={{ fontSize: '32px' }}>CASMM: {title}</h1>
-							<p style={{ fontSize: '20px' }}> Share your masterpiece with friends! </p>
+							<h1 style={{ fontSize: '32px' }}>CodeSparks: {title}</h1>
+							<p style={{ fontSize: '20px' }}> Check out this awesome code I made using CodeSparks!</p>
 							<p>Link: {shareLink}</p>
 							<button onClick={handleCopyClick}>{buttonMessage}</button>
 						</div>

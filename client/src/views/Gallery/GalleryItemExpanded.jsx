@@ -2,13 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
 import { getGalleryObject } from '../../Utils/requests';
+import { updateGalleryObject } from '../../Utils/requests';
 import Like from '../../components/Gallery/like';
 import Share from '../../components/Gallery/Share';
 import Fork from '../../components/Gallery/Fork';
 import DiscussionBoard from '../../components/Gallery/DiscussionBoard';
 import './GalleryItemExpanded.less';
 
-const GalleryItemExpanded = () => {
+const GalleryItemExpanded = (props) => {
     const path = window.location.pathname;
     const galleryId = path.substring(path.lastIndexOf("/item/") + 6).replace(/\D/g, '');
     const [galleryObject, setGalleryObject] = useState(undefined);
@@ -21,12 +22,16 @@ const GalleryItemExpanded = () => {
             </div>
         </div>);
 
+
+
     async function fetchObject() {
         const response = await getGalleryObject(galleryId);
+		
         if (response.data === undefined || response.data === null) {
             setRender(notFoundMessage);
             return;
         }
+		updateGalleryObject(galleryId, response.data.view_count+1);
         setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
         setRender(
@@ -60,6 +65,7 @@ const GalleryItemExpanded = () => {
 
     //this will run once, on page load, to fetch the gallery object
     useEffect(() => {
+		 updateGalleryObject(props.id, props.viewCount);
         if (galleryId === null || galleryId === undefined || galleryId === "") {
             setRender(notFoundMessage)
         }

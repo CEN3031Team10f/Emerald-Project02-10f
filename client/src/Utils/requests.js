@@ -706,3 +706,14 @@ export const getGalleryObject = async (id) =>
     auth: false,
     error: 'Unable to retrive gallery object',
   });
+  
+   export const updateGalleryObject = async (id,viewCount) =>
+  makeRequest({
+    method: PUT,
+    path: `${server}/gallery-posts/${id}`,
+	data: {
+      view_count:viewCount,
+    },
+    auth: false,
+    error: 'Unable to retrive gallery object',
+  });

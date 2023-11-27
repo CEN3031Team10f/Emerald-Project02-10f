@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import thumbnailImage from './thumbnail.png';
 
-
 //Wrapper item needs to be a useState for it to get dynamically rendered
 
 const GalleryItem = (props) => {
@@ -9,11 +8,11 @@ const GalleryItem = (props) => {
     const title = props.Title || 'Title';
     const creator = props.User_name || 'Creator Name';
     const likeCount = props.like_count || 0;
-    const viewCount = props.view_count || 0;
+    const viewCount = props.view_count;
     const posted = props.posted?.substr(0, 10) || 'Posted Date';
     const id = props.id || 0;
 
-    const [viewCounts, setViewCounts] = useState(viewCount);
+    //const [viewCount, setViewCount] = useState(props.view_count );
 
     const showModal = () => {
         window.location.href = `/gallery/item/${id}`;
@@ -34,7 +33,7 @@ const GalleryItem = (props) => {
                     <div className='flex flex-column'>
                         <p>Creator: {creator}</p>
                         <p>Posted: {posted}</p>
-                        <p>Views: {viewCounts}</p>
+                        <p>Views: {viewCount}</p>
                         <p></p>
                     </div>
                     <div className='flex flex-column justify-end'>
