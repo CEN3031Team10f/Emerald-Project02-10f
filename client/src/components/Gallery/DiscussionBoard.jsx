@@ -14,7 +14,7 @@ const DiscussionBoard = ({ post }) => {
     // Fetch comments when the component mounts
     const fetchComments = async () => {
       try {
-        refreshComments();
+        await refreshComments();
       }
       catch (error) {
         console.error('Error fetching comments:', error.message);
