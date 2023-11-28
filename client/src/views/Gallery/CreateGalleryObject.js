@@ -1,9 +1,11 @@
 import { handleGalleryPost } from '../../components/ActivityPanels/Utils/helpers';
+import { message } from 'antd';
 
 async function createGalleryObject(title, user_name, like_count, view_count, visibility, type, classroomId, workspaceRef) {
 
   //**********create default discussion board here
   const discussion_board = [];
+  
 
     const data = {
     Title: title, 
@@ -18,6 +20,7 @@ async function createGalleryObject(title, user_name, like_count, view_count, vis
 
   console.log(data);
 
+//alert("type:"+typeof workspaceRef);
  try {
       const res = await handleGalleryPost(data, workspaceRef);
       console.log('response: at createGalleryObject ', res.err);
