@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import { getGalleryObject, updateViewCount, updateLikeCount} from '../../Utils/requests';
+import { getGalleryObject, updateViewCount, updateLikeCount } from '../../Utils/requests';
 import Like from '../../components/Gallery/like';
 import Share from '../../components/Gallery/Share';
 import Fork from '../../components/Gallery/Fork';
@@ -45,7 +45,7 @@ const GalleryItemExpanded = () => {
                     </div>
                     <div className='flex flex-row justify-end buttons-row'>
                         <div className='flex flex-column'>
-                            <Fork galleryObject={galleryObject} />
+                            <Fork galleryObject={response.data} />
                             <Share title={response.data.Title} />
                             <Like likeCount={response.data} />
                         </div>
