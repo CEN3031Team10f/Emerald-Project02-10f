@@ -31,36 +31,38 @@ const Gallery = () => {
         getGalleryObjects().then((response) => { // Backend
 
             // Go through all gallery items which have been loaded
-            const x = renderedGalleryItems?.length || 0;
+            const x = loadedGalleryItems?.length || 0;
             let tempItems = [];
             try {
                 for (let i = 0; i < x; i++) {
-                    const it = galleryObjects[i];
+                    const it = loadedGalleryItems[i];
 
                     // Logic for getting the filtered items
                     if (
-                        ((visibility.Public == true && it.visibility == "Public") ||
-                            (visibility.Organization == true && it.visibility == "Organization") ||
-                            (visibility.Classroom == true && it.visibility == "Classroom") ||
+                        ((visibility.Public == true && it.props.visibility == "Public") ||
+                            (visibility.Organization == true && it.props.visibility == "Organization") ||
+                            (visibility.Classroom == true && it.props.visibility == "Classroom") ||
                             (!visibility.Public && !visibility.Organization && !visibility.Classroom)) &&
 
-                        ((types.Block == true && it.type == "Block") ||
-                            (types.Lesson == true && it.type == "Lesson") ||
-                            (types.Project == true && it.type == "Project") ||
+                        ((types.Block == true && it.props.type == "Block") ||
+                            (types.Lesson == true && it.props.type == "Lesson") ||
+                            (types.Project == true && it.props.type == "Project") ||
                             (!types.Block && !types.Lesson && !types.Project))
 
                     ) {
 
                         tempItems.push(
                             <GalleryItem
-                                id={it.id}
-                                Title={it.Title}
-                                User_name={it.User_name}
-                                like_count={it.like_count}
-                                view_count={it.view_count}
-                                posted={it.updated_at}
-                                discussion_board={it.discussion_board}
-                                visibility={it.visibility} />
+                                key={"item" + it.props.id}
+                                id={it.props.id}
+                                Title={it.props.Title}
+                                User_name={it.props.User_name}
+                                like_count={it.props.like_count}
+                                view_count={it.props.view_count}
+                                posted={it.props.updated_at}
+                                discussion_board={it.props.discussion_board}
+                                visibility={it.props.visibility}
+                                type={it.props.type} />
                         );
                     }
                 }
@@ -107,7 +109,7 @@ const Gallery = () => {
             try {
                 for (let i = 0; i < x; i++) {
                     const it = response.data[i];
-                    tempItems.push(<GalleryItem id={it.id} Title={it.Title} User_name={it.User_name} like_count={it.like_count} view_count={it.view_count} posted={it.updated_at} discussion_board={it.discussion_board} visibility={it.visibility} />);
+                    tempItems.push(<GalleryItem key={"item" + it.id} id={it.id} Title={it.Title} User_name={it.User_name} like_count={it.like_count} view_count={it.view_count} posted={it.updated_at} discussion_board={it.discussion_board} visibility={it.visibility} type={it.type} />);
                 }
             } catch (e) {
                 console.log("Error in gallery objects");

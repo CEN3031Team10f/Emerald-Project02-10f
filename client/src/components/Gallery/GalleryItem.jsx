@@ -10,6 +10,7 @@ const GalleryItem = (props) => {
     const posted = props.posted?.substr(0, 10) || 'Posted Date';
     const id = props.id || 0;
     const [viewCounts, setViewCounts] = useState(viewCount);
+    const type = props.type || 'Type';
     const showModal = () => {
         window.location.href = `/gallery/item/${id}`;
     };
