@@ -6,15 +6,13 @@ import { useGlobalState } from '../../Utils/userState';
 
 const { Option } = Select;
 
-function GalleryObjectForm(props) {
+function GalleryObjectForm() {
   const [form] = Form.useForm();
   const [modalVisible, setModalVisible] = useState(false);
-  
+
   const handleCreateGalleryObject = () => {
     setModalVisible(true); // Show the modal
   };
-  
-   
 
   const handleFormSubmit = async (values) => {
     //NEED TO CHECK FOR IF LOGGED IN
@@ -26,8 +24,7 @@ function GalleryObjectForm(props) {
     if (values.visibility == null) {
       values.visibility = "Public";
     }
-	//alert("Type:"+ typeof props.workspaceRef);
-    createGalleryObject(values.title, "test student", 0, 0, values.visibility, 'Project','1',props.workspaceRef);
+    createGalleryObject(values.title, "test student", 0, 0, values.visibility, 'Project');
     console.log("Submitted values:", values);
     form.resetFields();
     setModalVisible(false); // Hide the modal after submission
