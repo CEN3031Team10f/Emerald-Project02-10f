@@ -14,7 +14,7 @@ const DiscussionBoard = ({ post }) => {
     // Fetch comments when the component mounts
     const fetchComments = async () => {
       try {
-        refreshComments();
+        await refreshComments();
       }
       catch (error) {
         console.error('Error fetching comments:', error.message);
@@ -23,9 +23,9 @@ const DiscussionBoard = ({ post }) => {
     fetchComments();
   }, [post]);
 
-const handleCommentSubmit = async () => {
+  const handleCommentSubmit = async () => {
     console.log(post)
-  try {
+    try {
       // Check if the comment input is not empty
       if (commentInput.trim() !== '') {
         // Post an unpinned comment
@@ -93,7 +93,7 @@ const handleCommentSubmit = async () => {
         const updatedDiscussionBoard0 = discussionBoard0.filter(comment => comment.is_pinned == true);
         let x = updatedDiscussionBoard0.length;
         console.log(x);
-        if(x + 1 <= maxPinCount){
+        if (x + 1 <= maxPinCount) {
           const response = await postPinnedComment({
             User_name: props.User_name,
             comment: props.comment_string,
@@ -107,7 +107,7 @@ const handleCommentSubmit = async () => {
           await updateDiscussionBoard(post.id, updatedDiscussionBoard);
           message.success('Pinned comment successfully!');
         }
-        else{
+        else {
           message.error('Cannot pin more than 3 comments!');
         }
       }
@@ -123,10 +123,10 @@ const handleCommentSubmit = async () => {
   const handleDelete = async (post, props) => {
     try {
       //delete the comment
-      if(props.is_pinned == true){
+      if (props.is_pinned == true) {
         deletePinnedComment(props.id);
       }
-      else{
+      else {
         deleteUnpinnedComment(props.id)
       }
       const discussionBoard = post.discussion_board || [];
@@ -175,7 +175,7 @@ const handleCommentSubmit = async () => {
             <div className='comment-buttons'>
               <button onClick={() => handleUpdateComment(post, comment)}><i className='fa fa-pencil-alt' /></button>
               <button onClick={() => handleDelete(post, comment)}><i className='fa fa-trash' /></button>
-              <button onClick={() => handlePinning(comment)}>{comment.is_pinned ? <i className='fa fa-thumbtack' /> : <i style={{ color: 'green' }} className='fa fa-thumbtack' />}</button>
+              <button onClick={() => handlePinning(comment)}>{comment.is_pinned ? <i className='fa fa-thumbtack' /> : <i style={{ color: 'red' }} className='fa fa-thumbtack' />}</button>
             </div>
           </div>
         ))}
