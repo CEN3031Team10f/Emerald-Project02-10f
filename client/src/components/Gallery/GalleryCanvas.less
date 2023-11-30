@@ -1,0 +1,26 @@
+div#blockly-canvas {
+    opacity: 1;
+
+    & * {
+        opacity: 1;
+    }
+}
+
+.blocklySvg {
+    width: 100%;
+}
+
+.blocklyToolboxDiv.hide-toolbox {
+    opacity: 0;
+    width: 0;
+}
+
+.blocklyToolboxDiv {
+    opacity: 1;
+    width: auto;
+    transition: all 1s ease;
+}
+
+g.blocklyScrollbarVertical {
+    right: 0 !important;
+}

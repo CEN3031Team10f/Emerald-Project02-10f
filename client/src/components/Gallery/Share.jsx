@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import thumbnailsImage from './thumbnails.png';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 
 function Share({ title }) {
 	let shareLink = window.location.href;
@@ -42,9 +42,9 @@ function Share({ title }) {
 
 	return (
 		<>
-			<button className="share-button" onClick={(e) => { handleShare(e) }}>
+			<Button title='Share this project' className="share-button" onClick={(e) => { handleShare(e) }}>
 				<i className='fa fa-share' />
-			</button>
+			</Button>
 
 			<div className='gallery-modal-holder'>
 				<Modal

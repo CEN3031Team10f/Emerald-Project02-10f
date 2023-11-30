@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DiscussionBoard.less';
 import { deletePinnedComment, deleteUnpinnedComment, postPinnedComment, postUnpinnedComment, updateDiscussionBoard } from '../../Utils/requests';
 import TextArea from 'antd/lib/input/TextArea';
+import { Button } from 'antd';
 
 const DiscussionBoard = ({ post }) => {
 
@@ -173,9 +174,9 @@ const DiscussionBoard = ({ post }) => {
             <label className='comment-username'>{comment.User_name}</label>
             <textarea className='comment-textarea' rows='4' cols='50' value={comment.comment_string} readOnly />
             <div className='comment-buttons'>
-              <button onClick={() => handleUpdateComment(post, comment)}><i className='fa fa-pencil-alt' /></button>
-              <button onClick={() => handleDelete(post, comment)}><i className='fa fa-trash' /></button>
-              <button onClick={() => handlePinning(comment)}>{comment.is_pinned ? <i className='fa fa-thumbtack' /> : <i style={{ color: 'red' }} className='fa fa-thumbtack' />}</button>
+              <Button onClick={() => handleUpdateComment(post, comment)}><i className='fa fa-pencil-alt' /></Button>
+              <Button onClick={() => handleDelete(post, comment)}><i className='fa fa-trash' /></Button>
+              <Button onClick={() => handlePinning(comment)}>{comment.is_pinned ? <i className='fa fa-thumbtack' /> : <i style={{ color: 'red' }} className='fa fa-thumbtack' />}</Button>
             </div>
           </div>
         ))}
@@ -187,7 +188,7 @@ const DiscussionBoard = ({ post }) => {
           value={commentInput}
           onChange={(e) => setCommentInput(e.target.value)}
         />
-        <button onClick={handleCommentSubmit}>Add Comment</button>
+        <Button onClick={handleCommentSubmit}>Add Comment</Button>
       </div>
     </div>
   );
