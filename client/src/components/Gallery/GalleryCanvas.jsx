@@ -349,9 +349,7 @@ export default function GalleryCanvas({ editing }) {
     );
 
     const [controls, setControls] = useState([]);
-    const [showToolbar, setShowToolbar] = useState(false);
     useEffect(() => {
-        setShowToolbar(editing);
         if (editing) {
             setControls(<Row id='icon-control-panel'>
                 <Col flex='auto'>
