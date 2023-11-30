@@ -44,8 +44,10 @@ export default function StudentCanvas({ activity }) {
 
   const replayRef = useRef([]);
   const clicks = useRef(0);
-
+alert("student");
   const setWorkspace = () => {
+	 	alert("student 49!");
+
     workspaceRef.current = window.Blockly.inject('blockly-canvas', {
       toolbox: document.getElementById('toolbox'),
     });
@@ -184,26 +186,33 @@ export default function StudentCanvas({ activity }) {
       activityRef.current = activity;
       if (!workspaceRef.current && activity && Object.keys(activity).length !== 0) {
         setWorkspace();
+			alert("student 188!");
 
         let onLoadSave = null;
         const res = await getSaves(activity.id);
+		console.log("student line 193");
         if (res.data) {
-          if (res.data.current) onLoadSave = res.data.current;
+			alert("student 195 watch for good  activity.id:"+activity.id);
+          if (res.data.current) {onLoadSave = res.data.current; alert("student 196 GOOD");}
           setSaves(res.data);
+		  			alert("student 198!  watch for 205");
         } else {
+						alert("student 199 error");
           console.log(res.err);
         }
 
         if (onLoadSave) {
+						alert("student 205!");
           let xml = window.Blockly.Xml.textToDom(onLoadSave.workspace);
           window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
           replayRef.current = onLoadSave.replay;
           setLastSavedTime(getFormattedDate(onLoadSave.updated_at));
         } else if (activity.template) {
+									alert("student 210!");
           let xml = window.Blockly.Xml.textToDom(activity.template);
           window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
         }
-
+									alert("student 214!");
         pushEvent('load workspace');
         workspaceRef.current.clearUndo();
       }

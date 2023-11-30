@@ -7,7 +7,6 @@ import { useGlobalState } from '../../../Utils/userState';
 
 const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity }) => {
   const [value] = useGlobalState('currUser');
-
   const userRole = value.role;
 
   switch (userRole) {

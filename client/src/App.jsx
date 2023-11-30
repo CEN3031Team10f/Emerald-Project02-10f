@@ -108,6 +108,18 @@ const App = () => {
             </PrivateRoute>
           }
         />
+		
+		 <Route
+          path='/workspaceGallery'
+          element={
+            <PrivateRoute>
+              <BlocklyPage isSandbox={true} />
+            </PrivateRoute>
+          }
+        />
+		
+		
+		
         <Route
           path='/ccdashboard'
           element={
@@ -120,6 +132,7 @@ const App = () => {
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
+	
   );
 };
 

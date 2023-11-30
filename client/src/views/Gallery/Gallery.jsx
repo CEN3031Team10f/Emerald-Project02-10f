@@ -30,8 +30,8 @@ const Gallery = () => {
     function applyFilters(types, visibility, loadedGalleryItems) {
         getGalleryObjects().then((response) => { // Backend
 
-            // Go through all gallery items which have been loaded
-            const x = renderedGalleryItems?.length || 0;
+            // Go through all gallery items
+            const x = Math.min(12, galleryObjects?.length || 0);
             let tempItems = [];
             try {
                 for (let i = 0; i < x; i++) {
@@ -51,17 +51,17 @@ const Gallery = () => {
 
                     ) {
 
-                        tempItems.push(
-                            <GalleryItem
-                                id={it.id}
-                                Title={it.Title}
-                                User_name={it.User_name}
-                                like_count={it.like_count}
-                                view_count={it.view_count}
-                                posted={it.updated_at}
-                                discussion_board={it.discussion_board}
-                                visibility={it.visibility} />
-                        );
+                            tempItems.push(
+                                <GalleryItem 
+                                    id={it.id} 
+                                    Title={it.Title} 
+                                    User_name={it.User_name} 
+                                    like_count={it.like_count} 
+                                    view_count={it.view_count} 
+                                    posted={it.updated_at} 
+                                    discussion_board={it.discussion_board} 
+                                    visibility={it.visibility} />
+                                );
                     }
                 }
 
@@ -71,6 +71,7 @@ const Gallery = () => {
                 console.log(e);
                 console.log(tempItems);
             }
+
             renderInRows(tempItems);
         });
     }
@@ -95,14 +96,36 @@ const Gallery = () => {
     }
 
     useEffect(() => {
-
+		/*
+		let response =  getGalleryObjects();
+		 setGalleryObjects(response.data);
+		 
+		const x = Math.min(12, response.data?.length || 0);
+		
+            let tempItems = [];
+            try {
+                for (let i = 0; i < x; i++) {
+                    const it = response.data[i];
+                    tempItems.push(<GalleryItem id={it.id} Title={it.Title} User_name={it.User_name} like_count={it.like_count} view_count={it.view_count} posted={it.updated_at} discussion_board={it.discussion_board} visibility={it.visibility} />);
+                }
+            } catch (e) {
+                console.log("Error in gallery objects");
+                console.log(e);
+                console.log(tempItems);
+            }
+            setLoadedGalleryItems(tempItems);
+            renderInRows(tempItems);*/
+		
+		
+		
+		
         getGalleryObjects().then((response) => {
             setGalleryObjects(response.data);
             //Convert gallery objects into JSX gallery items
-            // 12 is the max number of gallery items to display on load. Lazy loading should be implemented later
-
+            //x is the max number of gallery items to display on load
+			
             const x = Math.min(12, response.data?.length || 0);
-
+		
             let tempItems = [];
             try {
                 for (let i = 0; i < x; i++) {

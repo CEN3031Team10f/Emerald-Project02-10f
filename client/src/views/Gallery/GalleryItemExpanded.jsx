@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import { getGalleryObject, updateViewCount, updateLikeCount } from '../../Utils/requests';
+import { getGalleryObject, updateViewCount, updateLikeCount} from '../../Utils/requests';
 import Like from '../../components/Gallery/like';
 import Share from '../../components/Gallery/Share';
 import Fork from '../../components/Gallery/Fork';
@@ -30,6 +30,8 @@ const GalleryItemExpanded = () => {
         }
         setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
+		//alert("response.data.Title:"+response.data.Title);
+		//alert("galleryObject.Title:"+galleryObject.Title);
         await updateViewCount(response.data.id, response.data.view_count + 1);
         setRender(
             <div className='flex flex-row'>
@@ -45,7 +47,7 @@ const GalleryItemExpanded = () => {
                     </div>
                     <div className='flex flex-row justify-end buttons-row'>
                         <div className='flex flex-column'>
-                            <Fork galleryObject={response.data} />
+                            <Fork GO={response.data} />
                             <Share title={response.data.Title} />
                             <Like likeCount={response.data} />
                         </div>
