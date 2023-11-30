@@ -349,7 +349,7 @@ export default function GalleryCanvas({ editing }) {
     );
 
     const [controls, setControls] = useState([]);
-    const [showToolbar, setShowToolbar] = useState(editing);
+    const [showToolbar, setShowToolbar] = useState(false);
     useEffect(() => {
         setShowToolbar(editing);
         if (editing) {
