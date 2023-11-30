@@ -8,6 +8,9 @@ import Fork from '../../components/Gallery/Fork';
 import DiscussionBoard from '../../components/Gallery/DiscussionBoard';
 import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
+import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
+import { Button } from 'antd';
+
 
 const GalleryItemExpanded = () => {
     const path = window.location.pathname;
@@ -15,6 +18,9 @@ const GalleryItemExpanded = () => {
     const [galleryObject, setGalleryObject] = useState({});
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
+    const [expand, setExpand] = useState(false);
+
+
     const notFoundMessage = (
         <div className='flex flex-row'>
             <div className='flex flex-column discussion-col'>
@@ -30,13 +36,15 @@ const GalleryItemExpanded = () => {
         }
         setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
+        localStorage.setItem('gallery-xml', (response.data.xml_text));
         await updateViewCount(response.data.id, response.data.view_count + 1);
         setRender(
             <div className='flex flex-row'>
                 <div className='flex flex-column'>
-                    <img className='ooIMG'></img>
+                    <div className={(expand ? "exp " : "") + "ooIMG"}><GalleryCanvas editing={expand} /></div>
                 </div>
-                <div className='flex flex-column discussion-col'>
+                <div className={(expand ? "exp " : "") + 'flex flex-column discussion-col'}>
+                    <Button className='close-fork' onClick={() => setExpand(false)}>Close Fork Editor</Button>
                     <div className='flex flex-row' style={{ height: 80 + "%" }}>
                         <div className='flex flex-column'>
                             <DiscussionBoard post={response.data} />
@@ -45,7 +53,7 @@ const GalleryItemExpanded = () => {
                     </div>
                     <div className='flex flex-row justify-end buttons-row'>
                         <div className='flex flex-column'>
-                            <Fork galleryObject={response.data} />
+                            <Fork galleryObject={response.data} setExpand={setExpand} />
                             <Share title={response.data.Title} />
                             <Like likeCount={response.data} />
                         </div>
@@ -74,7 +82,7 @@ const GalleryItemExpanded = () => {
         return () => {
             document.removeEventListener('keydown', handleGalleryEscape);
         };
-    }, []);
+    }, [expand]);
 
     return (
         <>

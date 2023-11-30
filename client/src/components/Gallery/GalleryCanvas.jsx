@@ -14,6 +14,7 @@ import PlotterLogo from '../ActivityPanels/BlocklyCanvasPanel/Icons/PlotterLogo'
 import { useNavigate } from 'react-router-dom';
 import GalleryObjectForm from './GalleryObjectForm';
 import './GalleryCanvas.less';
+import Toolbox from './Toolbox.json';
 
 let plotId = 1;
 
@@ -351,26 +352,13 @@ export default function GalleryCanvas({ editing }) {
     );
 
     const [controls, setControls] = useState([]);
-    const [showToolbar, setShowToolbar] = useState(editing)
+    const [showToolbar, setShowToolbar] = useState(editing);
     useEffect(() => {
-        if (showToolbar) {
+        setShowToolbar(editing);
+        if (editing) {
             setControls(<Row id='icon-control-panel'>
-                <Col flex='none' id='section-header'>
-                    {localStorage.getItem('gallery-item-name')}
-                </Col>
                 <Col flex='auto'>
                     <Row align='middle' justify='end' id='description-container'>
-                        <Col flex={'30px'}>
-                            <button
-                                onClick={handleGoBack}
-                                id='link'
-                                className='flex flex-column'
-                            >
-                                <i id='icon-btn' className='fa fa-arrow-left' />
-                            </button>
-                        </Col>
-                        <Col flex='auto' />
-
                         <Col flex={'300px'}>
                             {lastSavedTime ? `Last changes saved ${lastSavedTime}` : ''}
                         </Col>
@@ -450,6 +438,7 @@ export default function GalleryCanvas({ editing }) {
                                 </Col>
                             </Row>
                         </Col>
+                        <GalleryObjectForm workspaceRef={workspaceRef} />
                         <Col flex={'180px'}>
                             <div
                                 id='action-btn-container'
@@ -487,8 +476,14 @@ export default function GalleryCanvas({ editing }) {
                     </Row>
                 </Col>
             </Row>);
+            document.querySelector(".blocklyToolboxDiv")?.classList.remove("hide-toolbox");
+
         }
-    }, [showToolbar, editing]);
+        else {
+            setControls([]);
+            document.querySelector(".blocklyToolboxDiv")?.classList.add("hide-toolbox");
+        }
+    }, [editing]);
 
     return (
         <>
@@ -524,12 +519,11 @@ export default function GalleryCanvas({ editing }) {
             </div>
 
             {/* This xml is for the blocks' menu we will provide. Here are examples on how to include categories and subcategories */}
-            {/* <xml id='toolbox' is='Blockly workspace'>
+            <xml id='toolbox' is='Blockly workspace'>
                 {
                     // Maps out block categories
-                    activity &&
-                    activity.toolbox &&
-                    activity.toolbox.map(([category, blocks]) => (
+                    Toolbox &&
+                    Toolbox.map(([category, blocks]) => (
                         <category name={category} is='Blockly category' key={category}>
                             {
                                 // maps out blocks in category
@@ -547,7 +541,7 @@ export default function GalleryCanvas({ editing }) {
                         </category>
                     ))
                 }
-            </xml> */}
+            </xml>
 
             {compileError && (
                 <Alert
@@ -557,7 +551,6 @@ export default function GalleryCanvas({ editing }) {
                     onClose={(e) => setCompileError('')}
                 ></Alert>
             )}
-            <GalleryObjectForm workspaceRef={workspaceRef} />
         </>
     );
 }

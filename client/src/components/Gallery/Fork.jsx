@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom"
+import { Button } from 'antd';
 
-function Fork({ galleryObject }) {
+function Fork({ setExpand }) {
 
-
-	//This can navigate page to /sandbox 
-	const navigate = useNavigate();
-
-	function handleFork(e) {
-		//navigate to  /workspace
-		//Should pass xml to the workspace
-		localStorage.setItem('gallery-xml', (galleryObject.xml_text));
-		localStorage.setItem('gallery-item-name', (galleryObject.Title));
-		navigate('/gallery/canvas');
-	}
 
 	return (
 
-		<button className="fork-button" onClick={(e) => { handleFork(e) }}>
+		<Button title='Fork this Project' className="fork-button" onClick={() => { setExpand(true) }}>
 			<i className='fa fa-code-branch' />
-		</button>
+		</Button>
 
 	);
 } export default Fork;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { updateLikeCount } from '../../Utils/requests';
+import { Button } from 'antd';
 
 const Like = (props) => {
     const inital_like_count = props.likeCount.like_count || 0;
@@ -19,16 +20,16 @@ const Like = (props) => {
             updateLikeCount(postId, like_count - 1);
             setHeart(<i className='fa fa-heart' />);
         }
-        
+
         set_like_count(like_count + (liked ? -1 : 1));
         set_liked(!liked); // Toggle the liked state
     }
 
     return (
         <>
-            <button className="like-button" onClick={(e) => { like_feature(e) }}>
+            <Button title='Like this project' className="like-button" onClick={(e) => { like_feature(e) }}>
                 {heart}
-            </button>
+            </Button>
             <p>Likes: {like_count}</p>
         </>
     );
