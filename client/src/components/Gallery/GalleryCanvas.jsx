@@ -197,9 +197,6 @@ export default function GalleryCanvas({ editing }) {
                     window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
                     replayRef.current = onLoadSave.replay;
                     setLastSavedTime(getFormattedDate(onLoadSave.updated_at));
-                } else if (localStorage.getItem('gallery-xml')) {
-                    let xml = window.Blockly.Xml.textToDom(localStorage.getItem('gallery-xml'));
-                    window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
                 }
 
                 pushEvent('load workspace');
