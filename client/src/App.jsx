@@ -21,6 +21,7 @@ import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import Gallery from './views/Gallery/Gallery';
 import GalleryItemExpanded from './views/Gallery/GalleryItemExpanded';
+import GalleryCanvas from './components/Gallery/GalleryCanvas';
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
         <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
         <Route path='/gallery' element={<Gallery />} />
         <Route path='/gallery/item/:id' element={<GalleryItemExpanded />} />
+        <Route path='/gallery/canvas' element={<GalleryCanvas editing={true} />} />
         <Route
           path='/report'
           element={

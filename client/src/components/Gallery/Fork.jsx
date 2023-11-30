@@ -10,8 +10,9 @@ function Fork({ galleryObject }) {
 	function handleFork(e) {
 		//navigate to  /workspace
 		//Should pass xml to the workspace
-		localStorage.setItem('my-activity', JSON.stringify(galleryObject.xml_text));
-		navigate('/workspace');
+		localStorage.setItem('gallery-xml', (galleryObject.xml_text));
+		localStorage.setItem('gallery-item-name', (galleryObject.Title));
+		navigate('/gallery/canvas');
 	}
 
 	return (
