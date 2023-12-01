@@ -101,9 +101,9 @@ const Gallery = () => {
         getGalleryObjects().then((response) => {
             setGalleryObjects(response.data);
             //Convert gallery objects into JSX gallery items
-            // 12 is the max number of gallery items to display on load. Lazy loading should be implemented later
+            //Lazy loading should be implemented later
 
-            const x = Math.min(12, response.data?.length || 0);
+            const x = response.data?.length || 0;
 
             let tempItems = [];
             try {
