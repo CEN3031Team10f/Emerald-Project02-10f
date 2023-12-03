@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import thumbnailsImage from './thumbnails.png';
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 
 function Share({ title }) {
 	let shareLink = window.location.href;
@@ -18,8 +18,8 @@ function Share({ title }) {
 
 	function handleShare(e) {
 		const shareData = {
-			title: 'CASMM: ' + title,
-			text: 'Check out this awesome code I made using CASMM!',
+			title: 'Code Sparks: ' + title,
+			text: 'Check out this awesome code I made using Code Sparks!',
 			url: shareLink,
 		};
 		if (navigator.canShare(shareData)) {
@@ -31,7 +31,8 @@ function Share({ title }) {
 	}
 
 	function handleCopyClick() {
-		navigator.clipboard.writeText(shareLink)
+		  const shareData = `Check out this awesome code I made using Code Sparks!\nCode Sparks: ${title}\n${shareLink}`;
+		navigator.clipboard.writeText(shareData)
 			.then(() => {
 				setButtonMessage('Copied!');
 			})
@@ -42,9 +43,9 @@ function Share({ title }) {
 
 	return (
 		<>
-			<button className="share-button" onClick={(e) => { handleShare(e) }}>
+			<Button title='Share this project' className="share-button" onClick={(e) => { handleShare(e) }}>
 				<i className='fa fa-share' />
-			</button>
+			</Button>
 
 			<div className='gallery-modal-holder'>
 				<Modal
@@ -60,7 +61,7 @@ function Share({ title }) {
 							<img src={thumbnailsImage} style={{ height: '200px' }} />
 						</div>
 						<div className='flex flex-column' style={{ 'margin-left': '30px' }}>
-							<h1 style={{ fontSize: '32px' }}>CASMM: {title}</h1>
+							<h1 style={{ fontSize: '32px' }}>Code Sparks: {title}</h1>
 							<p style={{ fontSize: '20px' }}> Share your masterpiece with friends! </p>
 							<p>Link: {shareLink}</p>
 							<button onClick={handleCopyClick}>{buttonMessage}</button>
@@ -71,3 +72,4 @@ function Share({ title }) {
 		</>
 	);
 } export default Share;
+

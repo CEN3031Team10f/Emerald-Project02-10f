@@ -756,7 +756,7 @@ export const deleteUnpinnedComment = async (comment) =>
   makeRequest({
     method: DELETE,
     path: `${server}/unpinned-comments/${comment}`,
-    auth: true,
+    auth: false,
     error: 'Failed to delete unpinned comment.',
   });
 

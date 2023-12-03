@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './DiscussionBoard.less';
-import { deletePinnedComment, deleteUnpinnedComment, postPinnedComment, postUnpinnedComment , updateDiscussionBoard} from '../../Utils/requests';
+import { deletePinnedComment, deleteUnpinnedComment, postPinnedComment, postUnpinnedComment, updateDiscussionBoard } from '../../Utils/requests';
+import TextArea from 'antd/lib/input/TextArea';
+import { Button } from 'antd';
 
-const DiscussionBoard = ( {post} ) => {
+const DiscussionBoard = ({ post }) => {
 
   // State to hold comments
   const [sortedComments, setSortedComments] = useState([]);
-  const [commentInput, setCommentInput] = useState(''); // Define commentInput state
-
+  const [commentInput, setCommentInput] = useState(''); // Define commentInput state 
+  const maxPinCount = 3;
 
   useEffect(() => {
     // Fetch comments when the component mounts
     const fetchComments = async () => {
       try {
-        refreshComments();
-      } 
+        await refreshComments();
+      }
       catch (error) {
         console.error('Error fetching comments:', error.message);
       }
@@ -23,7 +25,8 @@ const DiscussionBoard = ( {post} ) => {
   }, [post]);
 
   const handleCommentSubmit = async () => {
-  try {
+    console.log(post)
+    try {
       // Check if the comment input is not empty
       if (commentInput.trim() !== '') {
         // Post an unpinned comment
@@ -61,14 +64,15 @@ const DiscussionBoard = ( {post} ) => {
       }
     } catch (error) {
       console.error('Error submitting comment:', error.message);
-  }
+    }
   };
   //these props is the actual comment object
   const handlePinning = async (props) => {
+    console.log("handle pinning: ", props)
     try {
-      if(props.pinned === true){
+      if (props.is_pinned === true) {
         // Post an unpinned comment
-        await postUnpinnedComment({
+        const response = await postUnpinnedComment({
           User_name: props.User_name, // Replace with the actual username or get it from your authentication system
           comment: props.comment_string,
           is_pinned: false,
@@ -76,23 +80,42 @@ const DiscussionBoard = ( {post} ) => {
 
         //delete the pinned comment from pinned comment backend and from gallery-post attribute backend
         await deletePinnedComment(props.id);
+        const discussionBoard = post.discussion_board || [];
+        const updatedDiscussionBoard = discussionBoard.filter(comment => comment.id !== props.id);
+        updatedDiscussionBoard.push(response.data);
+        await updateDiscussionBoard(post.id, updatedDiscussionBoard);
+        message.success('Unpinned comment successfully!');
+        console.log(props);
       }
 
-      else{
+      else {
         // Post a pinned comment
-        await postPinnedComment({
-          User_name: props.User_name,
-          comment: props.comment_string,
-          is_pinned: true,
-        });
-        //delete the unpinned comment from unpinned comment backend and from gallery-post attribute backend
-        await deleteUnpinnedComment(props.id);
-        await deleteDiscussionBoard(post.id, props.id);
+        const discussionBoard0 = post.discussion_board || [];
+        const updatedDiscussionBoard0 = discussionBoard0.filter(comment => comment.is_pinned == true);
+        let x = updatedDiscussionBoard0.length;
+        console.log(x);
+        if (x + 1 <= maxPinCount) {
+          const response = await postPinnedComment({
+            User_name: props.User_name,
+            comment: props.comment_string,
+            is_pinned: true,
+          });
+          //delete the unpinned comment from unpinned comment backend and from gallery-post attribute backend
+          await deleteUnpinnedComment(props.id);
+          const discussionBoard = post.discussion_board || [];
+          const updatedDiscussionBoard = discussionBoard.filter(comment => comment.id !== props.id);
+          updatedDiscussionBoard.push(response.data);
+          await updateDiscussionBoard(post.id, updatedDiscussionBoard);
+          message.success('Pinned comment successfully!');
+        }
+        else {
+          message.error('Cannot pin more than 3 comments!');
+        }
       }
 
       await refreshComments();
 
-    } 
+    }
     catch (error) {
       console.error('Error pinning comment:', error.message);
     }
@@ -101,6 +124,12 @@ const DiscussionBoard = ( {post} ) => {
   const handleDelete = async (post, props) => {
     try {
       //delete the comment
+      if (props.is_pinned == true) {
+        deletePinnedComment(props.id);
+      }
+      else {
+        deleteUnpinnedComment(props.id)
+      }
       const discussionBoard = post.discussion_board || [];
       const updatedDiscussionBoard = discussionBoard.filter(comment => comment.id !== props.id);
       await updateDiscussionBoard(post.id, updatedDiscussionBoard);
@@ -114,8 +143,8 @@ const DiscussionBoard = ( {post} ) => {
     const discussionBoard = post.discussion_board || [];
     const pinnedComments = discussionBoard.filter(comment => comment.is_pinned === true);
     const unpinnedComments = discussionBoard.filter(comment => comment.is_pinned !== true);
-    const sortedComments = [...pinnedComments, ...unpinnedComments];
-    setSortedComments(sortedComments);
+    const updatedSortedComments = [...pinnedComments, ...unpinnedComments];
+    setSortedComments(updatedSortedComments);
   };
 
   const handleUpdateComment = async (post, props) => {
@@ -123,7 +152,7 @@ const DiscussionBoard = ( {post} ) => {
       //update the comment
       const discussionBoard = post.discussion_board || [];
       const updatedDiscussionBoard = discussionBoard.map(comment => {
-        if(comment.id === props.id){
+        if (comment.id === props.id) {
           comment.comment_string = props.comment_string;
         }
         return comment;
@@ -135,31 +164,31 @@ const DiscussionBoard = ( {post} ) => {
       console.error('Error updating comment:', error.message);
     }
   }
-  
+
   return (
     <div className='discussion-board'>
       <h3>Discussion</h3>
       <div className='comments'>
         {sortedComments.map((comment, index) => (
           <div key={index} className='comment-box'>
-          <label className='comment-username'>{comment.User_name}</label>
-          <textarea className='comment-textarea' rows='4' cols='50' value={comment.comment_string} readOnly />
-          <div className='comment-buttons'>
-              <button onClick={() => handleUpdate(comment)}>Edit</button>
-              <button onClick={() => handleDelete(post, comment)}>Delete</button>
-              <button onClick={() => handlePinning(comment)}>{comment.is_pinned ? 'Unpin' : 'Pin'}</button>
-          </div>
+            <label className='comment-username'>{comment.User_name}</label>
+            <textarea className='comment-textarea' rows='4' cols='50' value={comment.comment_string} readOnly />
+            <div className='comment-buttons'>
+              <Button onClick={() => handleUpdateComment(post, comment)}><i className='fa fa-pencil-alt' /></Button>
+              <Button onClick={() => handleDelete(post, comment)}><i className='fa fa-trash' /></Button>
+              <Button onClick={() => handlePinning(comment)}>{comment.is_pinned ? <i className='fa fa-thumbtack' /> : <i style={{ color: 'red' }} className='fa fa-thumbtack' />}</Button>
+            </div>
           </div>
         ))}
       </div>
       <div className='comment-input'>
-        <input
+        <TextArea
           type='text'
           placeholder='Add a comment...'
           value={commentInput}
           onChange={(e) => setCommentInput(e.target.value)}
         />
-        <button onClick={handleCommentSubmit}>Add Comment</button>
+        <Button onClick={handleCommentSubmit}>Add Comment</Button>
       </div>
     </div>
   );

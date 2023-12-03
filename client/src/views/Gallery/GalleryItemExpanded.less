@@ -51,13 +51,21 @@ div.pageHeader {
 }
 
 .ooIMG {
-    min-width: 30dvw;
+    min-width: 40dvw;
     width: auto;
     height: auto;
     aspect-ratio: 2/3;
-    background-color: red;
+    background-color: #f4f4f5;
     border-radius: 15px;
     max-height: 75vh;
+    pointer-events: none;
+    transition: all 1s ease;
+    overflow: hidden;
+
+    &.exp {
+        min-width: 70dvw;
+        pointer-events: all;
+    }
 }
 
 .return-button {
@@ -94,6 +102,8 @@ div.pageHeader {
     }
 }
 
+
+
 .content-col {
     align-content: center;
     width: calc(100% - 50px);
@@ -109,6 +119,33 @@ div.pageHeader {
     margin-left: 5%;
     max-height: 75vh;
     height: auto;
+    overflow-y: scroll;
+    transition: all 1s ease;
+
+    &.exp {
+        min-width: 10dvw;
+
+        &>* {
+            opacity: 0;
+        }
+
+        & button.close-fork {
+            opacity: 1;
+            width: auto;
+            height: 100% !important;
+        }
+    }
+
+    &::-webkit-scrollbar {
+        //hide the scrollbar
+        width: 0;
+    }
+
+    & button.close-fork {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
 }
 
 div.buttons-row>div {
@@ -117,4 +154,19 @@ div.buttons-row>div {
     //align-items: center; 
     margin-right: 20px;
     gap: 10px;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .ooIMG {
+        transition: none !important;
+    }
+
+    .discussion-col {
+        transition: none !important;
+    }
+
+    .return-button {
+        transition: none !important;
+
+    }
 }

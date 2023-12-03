@@ -11,36 +11,32 @@ import {
 import { useGlobalState } from "../../Utils/userState"
 
 //TO SUBMIT TO GALLERY
-alert("BlocklyPage");
-export default function BlocklyPage({ isSandbox }) {
+export default function BlocklyPage({ isSandbox, isFork }) {
+
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
 
   useEffect(() => {
+	  if(isFork==false)
+	  {
     const setup = async () => {
-		//alert(" window.location.href:"+ window.location.href);
       // if we are in sandbox mode show all toolbox
       const sandboxActivity = JSON.parse(localStorage.getItem("sandbox-activity"))
       if (isSandbox) {
-		  alert("BlocklyPage isSandbox!");
         const AllToolboxRes = await getActivityToolboxAll()
-        if (!sandboxActivity?.id || value.role === "Mentor"|| window.location.href === "http://localhost:3000/workspaceGallery") {
-			alert("BlocklyPage Line 29!");
+        if (!sandboxActivity?.id || value.role === "Mentor") {
           if (AllToolboxRes.data) {
-			  			alert("BlocklyPage Line 31 GOOD");
             let loadedActivity = {
               ...sandboxActivity,
               toolbox: AllToolboxRes.data.toolbox,
             }
             localStorage.setItem("sandbox-activity", JSON.stringify(loadedActivity))
             setActivity(loadedActivity)
-          } else { alert("BlocklyPage Line 40 error");
+          } else {
             message.error(AllToolboxRes.err)
           }
-        } 
-		else if (value.role === "ContentCreator") {
-						alert("BlocklyPage Line 41");
+        } else if (value.role === "ContentCreator") {
           const res = await getAuthorizedWorkspaceToolbox(sandboxActivity.id)
           if (res.data) {
             let loadedActivity = { ...sandboxActivity, selectedToolbox: res.data.toolbox }
@@ -52,13 +48,9 @@ export default function BlocklyPage({ isSandbox }) {
             message.error(res.err)
           }
         }
-					alert("BlocklyPage Line 53 sandboxActivity.id: "+ sandboxActivity.id);
-
       }
       // else show toolbox based on the activity we are viewing
       else {
-		  		  alert("BlocklyPage NotSandbox");
-
         const localActivity = JSON.parse(localStorage.getItem("my-activity"))
 
         if (localActivity) {
@@ -76,25 +68,20 @@ export default function BlocklyPage({ isSandbox }) {
             }
           }
         } else {
-						alert("BlocklyPage Line 75");
-
           navigate(-1)
         }
       }
     }
-
     setup()
+  }
   }, [isSandbox, navigate, value.role])
 
   return (
     <div className="container nav-padding">
       <NavBar />
       <div className="flex flex-row">
-        <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-        
+<BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} isFork={isFork} />
       </div>
-
-
     </div>
   )
 }
