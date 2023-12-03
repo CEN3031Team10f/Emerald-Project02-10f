@@ -8,7 +8,7 @@ import Fork from '../../components/Gallery/Fork';
 import DiscussionBoard from '../../components/Gallery/DiscussionBoard';
 import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
-import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
+import GalleryCanvas from '../../components/ActivityPanels/BlocklyCanvasPanel/canvas/GalleryCanvas';
 import { Button } from 'antd';
 
 
@@ -44,7 +44,7 @@ const GalleryItemExpanded = () => {
                     <div className={(expand ? "exp " : "") + "ooIMG"}><GalleryCanvas editing={expand} /></div>
                 </div>
                 <div className={(expand ? "exp " : "") + 'flex flex-column discussion-col'}>
-                    <Button className='close-fork' onClick={() => setExpand(false)}>Close Fork Editor</Button>
+                    {<Button className='close-fork' onClick={() => setExpand(false)}>Close Fork Editor</Button>}
                     <div className='flex flex-row' style={{ height: 80 + "%" }}>
                         <div className='flex flex-column'>
                             <DiscussionBoard post={response.data} />

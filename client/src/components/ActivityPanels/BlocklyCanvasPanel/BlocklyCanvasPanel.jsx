@@ -4,13 +4,21 @@ import StudentCanvas from './canvas/StudentCanvas';
 import MentorCanvas from './canvas/MentorCanvas';
 import ContentCreatorCanvas from './canvas/ContentCreatorCanvas';
 import { useGlobalState } from '../../../Utils/userState';
+import GalleryCanvas from './canvas/GalleryCanvas';
 
-const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity }) => {
+
+const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity, isFork }) => {
+
   const [value] = useGlobalState('currUser');
 
   const userRole = value.role;
-
-  switch (userRole) {
+  if(isFork)
+  {
+	  return <GalleryCanvas editing = {isFork} />;
+  }
+  else{
+	  
+	  switch (userRole) {
     case 'DefaultUser':
       return <PublicCanvas activity={activity} isSandbox={isSandbox} />;
     case 'Student':
@@ -34,6 +42,11 @@ const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity }) => {
     default:
       return <div></div>;
   }
+	  
+	  
+  }
+
+  
 };
 
 export default BlocklyCanvasPanel;
