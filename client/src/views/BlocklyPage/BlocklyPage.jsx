@@ -11,13 +11,16 @@ import {
 import { useGlobalState } from "../../Utils/userState"
 
 //TO SUBMIT TO GALLERY
+export default function BlocklyPage({ isSandbox, isFork }) {
 
-export default function BlocklyPage({ isSandbox }) {
   const [value] = useGlobalState("currUser")
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
 
+//check if the fork button is clicked. if the fork button is clicked, it just run the return statement.
   useEffect(() => {
+	  if(isFork==false)
+	  {
     const setup = async () => {
       // if we are in sandbox mode show all toolbox
       const sandboxActivity = JSON.parse(localStorage.getItem("sandbox-activity"))
@@ -70,19 +73,16 @@ export default function BlocklyPage({ isSandbox }) {
         }
       }
     }
-
     setup()
+  }
   }, [isSandbox, navigate, value.role])
 
   return (
     <div className="container nav-padding">
       <NavBar />
       <div className="flex flex-row">
-        <BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} />
-        
+<BlocklyCanvasPanel activity={activity} setActivity={setActivity} isSandbox={isSandbox} isFork={isFork} />
       </div>
-
-
     </div>
   )
 }

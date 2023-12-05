@@ -21,7 +21,7 @@ import ResetPassword from './views/TeacherLogin/ResetPassword';
 import TeacherLogin from './views/TeacherLogin/TeacherLogin';
 import Gallery from './views/Gallery/Gallery';
 import GalleryItemExpanded from './views/Gallery/GalleryItemExpanded';
-import GalleryCanvas from './components/Gallery/GalleryCanvas';
+import GalleryCanvas from './components/ActivityPanels/BlocklyCanvasPanel/canvas/GalleryCanvas';
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/login' element={<StudentLogin />} />
         <Route path='/replay/:saveID' element={<Replay />} />
-        <Route path='/sandbox' element={<BlocklyPage isSandbox={true} />} />
+        <Route path='/sandbox' element={<BlocklyPage isSandbox={true}  isFork={false}/>} />
         <Route path='/gallery' element={<Gallery />} />
         <Route path='/gallery/item/:id' element={<GalleryItemExpanded />} />
         <Route path='/gallery/canvas' element={<GalleryCanvas editing={true} />} />
@@ -98,15 +98,26 @@ const App = () => {
           path='/workspace'
           element={
             <PrivateRoute>
-              <BlocklyPage isSandbox={false} />
+              <BlocklyPage isSandbox={false} isFork={false}/>
             </PrivateRoute>
           }
         />
+		
+		{/*for the fork function.*/}
+		<Route
+          path='/workspaceGallery'
+          element={
+            <PrivateRoute>
+              <BlocklyPage isSandbox={true}  isFork={true} />
+            </PrivateRoute>
+          }
+        />
+		
         <Route
           path='/activity'
           element={
             <PrivateRoute>
-              <BlocklyPage isSandbox={false} />
+              <BlocklyPage isSandbox={false}  BlocklyPage={false}/>
             </PrivateRoute>
           }
         />
