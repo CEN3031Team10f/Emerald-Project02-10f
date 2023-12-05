@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import thumbnailImage from './thumbnail.png';
 //Wrapper item needs to be a useState for it to get dynamically rendered
 const GalleryItem = (props) => {
+    const [visible, setVisible] = useState(false);
     const title = props.Title || 'Title';
     const creator = props.User_name || 'Creator Name';
     const likeCount = props.like_count || 0;
