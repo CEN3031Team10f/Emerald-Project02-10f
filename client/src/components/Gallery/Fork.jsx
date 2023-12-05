@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from 'antd';
 
-function Fork({ setExpand }) {
+function Fork() {
 	
+	//change the url to /workspaceGallery
 	const showModal = () => {
 		setTimeout(() => {
         window.location.href = `/workspaceGallery`;
@@ -16,4 +17,7 @@ function Fork({ setExpand }) {
 		</Button>
 
 	);
-} export default Fork;
+} 
+
+
+export default Fork;

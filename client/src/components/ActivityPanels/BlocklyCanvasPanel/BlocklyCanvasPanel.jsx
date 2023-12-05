@@ -12,6 +12,8 @@ const BlocklyCanvasPanel = ({ activity, isSandbox, setActivity, isFork }) => {
   const [value] = useGlobalState('currUser');
 
   const userRole = value.role;
+  //check if the fork button is clicked or not.
+  // if the fork button is clicked, return GalleryCanvas.
   if(isFork)
   {
 	  return <GalleryCanvas editing = {isFork} />;

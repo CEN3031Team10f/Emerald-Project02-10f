@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import thumbnailsImage from './thumbnails.png';
 import { Modal, Button } from 'antd';
+import PropTypes from 'prop-types';
+
 
 function Share({ title }) {
 	let shareLink = window.location.href;
@@ -16,6 +18,7 @@ function Share({ title }) {
 		setButtonMessage('Copy the link!');
 	};
 
+// browser native share function
 	function handleShare(e) {
 		const shareData = {
 			title: 'Code Sparks: ' + title,
@@ -30,6 +33,7 @@ function Share({ title }) {
 		}
 	}
 
+//if the users' browsers do not native share function
 	function handleCopyClick() {
 		  const shareData = `Check out this awesome code I made using Code Sparks!\nCode Sparks: ${title}\n${shareLink}`;
 		navigator.clipboard.writeText(shareData)
@@ -71,5 +75,9 @@ function Share({ title }) {
 			</div>
 		</>
 	);
-} export default Share;
+} 
+	Share.propTypes = {
+  title: PropTypes.string.isRequired, 
+};
+export default Share;
 

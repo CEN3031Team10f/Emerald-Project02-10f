@@ -1,7 +1,6 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import { getGalleryObject, updateViewCount, updateLikeCount } from '../../Utils/requests';
+import { getGalleryObject, updateViewCount } from '../../Utils/requests';
 import Like from '../../components/Gallery/like';
 import Share from '../../components/Gallery/Share';
 import Fork from '../../components/Gallery/Fork';
@@ -15,7 +14,6 @@ import { Button } from 'antd';
 const GalleryItemExpanded = () => {
     const path = window.location.pathname;
     const galleryId = path.substring(path.lastIndexOf("/item/") + 6).replace(/\D/g, '');
-    const [galleryObject, setGalleryObject] = useState({});
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
     const [expand, setExpand] = useState(false);
@@ -34,7 +32,6 @@ const GalleryItemExpanded = () => {
             setRender(notFoundMessage);
             return;
         }
-        setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
         localStorage.setItem('gallery-xml', (response.data.xml_text));
         await updateViewCount(response.data.id, response.data.view_count + 1);
@@ -78,18 +75,18 @@ const GalleryItemExpanded = () => {
             fetchObject();
         }
         //bind listener to escape key to return to gallery
-        document.addEventListener('keydown', handleGalleryEscape);
+		window.addEventListener('keydown', handleGalleryEscape);
         return () => {
-            document.removeEventListener('keydown', handleGalleryEscape);
+                  window.removeEventListener('keydown', handleGalleryEscape);
         };
     }, [expand]);
 
     return (
         <>
             <NavBar />
-            <div onKeyDown={handleGalleryEscape} className='flex flex-row'>
-                <div className='flex flex-column justify-center'>
-                    <button tabIndex={0} onClick={() => { window.location.href = "/gallery" }} className='return-button'>
+			<div className='flex flex-row'>
+				<div className='flex flex-column justify-center'>
+					<button tabIndex={0} onClick={() => { window.location.href = "/gallery" }} className='return-button'>
                         <p>Return to Gallery ⬇️</p>
                     </button>
                 </div>

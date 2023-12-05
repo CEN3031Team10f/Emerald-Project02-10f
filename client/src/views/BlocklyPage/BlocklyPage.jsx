@@ -17,6 +17,7 @@ export default function BlocklyPage({ isSandbox, isFork }) {
   const [activity, setActivity] = useState({})
   const navigate = useNavigate()
 
+//check if the fork button is clicked. if the fork button is clicked, it just run the return statement.
   useEffect(() => {
 	  if(isFork==false)
 	  {
