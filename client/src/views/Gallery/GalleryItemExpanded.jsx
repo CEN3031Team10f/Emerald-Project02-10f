@@ -1,19 +1,21 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBar/NavBar';
-import { getGalleryObject, updateViewCount } from '../../Utils/requests';
+import { getGalleryObject, updateViewCount, updateLikeCount } from '../../Utils/requests';
 import Like from '../../components/Gallery/like';
 import Share from '../../components/Gallery/Share';
 import Fork from '../../components/Gallery/Fork';
 import DiscussionBoard from '../../components/Gallery/DiscussionBoard';
 import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
-import GalleryCanvas from '../../components/ActivityPanels/BlocklyCanvasPanel/canvas/GalleryCanvas';
+import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
 import { Button } from 'antd';
 
 
 const GalleryItemExpanded = () => {
     const path = window.location.pathname;
     const galleryId = path.substring(path.lastIndexOf("/item/") + 6).replace(/\D/g, '');
+    const [galleryObject, setGalleryObject] = useState({});
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
     const [expand, setExpand] = useState(false);
@@ -32,6 +34,7 @@ const GalleryItemExpanded = () => {
             setRender(notFoundMessage);
             return;
         }
+        setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
         localStorage.setItem('gallery-xml', (response.data.xml_text));
         await updateViewCount(response.data.id, response.data.view_count + 1);
@@ -41,7 +44,7 @@ const GalleryItemExpanded = () => {
                     <div className={(expand ? "exp " : "") + "ooIMG"}><GalleryCanvas editing={expand} /></div>
                 </div>
                 <div className={(expand ? "exp " : "") + 'flex flex-column discussion-col'}>
-                    {<Button className='close-fork' onClick={() => setExpand(false)}>Close Fork Editor</Button>}
+                    <Button className='close-fork' onClick={() => setExpand(false)}>Close Fork Editor</Button>
                     <div className='flex flex-row' style={{ height: 80 + "%" }}>
                         <div className='flex flex-column'>
                             <DiscussionBoard post={response.data} />
@@ -75,18 +78,18 @@ const GalleryItemExpanded = () => {
             fetchObject();
         }
         //bind listener to escape key to return to gallery
-		window.addEventListener('keydown', handleGalleryEscape);
+        document.addEventListener('keydown', handleGalleryEscape);
         return () => {
-                  window.removeEventListener('keydown', handleGalleryEscape);
+            document.removeEventListener('keydown', handleGalleryEscape);
         };
     }, [expand]);
 
     return (
         <>
             <NavBar />
-			<div className='flex flex-row'>
-				<div className='flex flex-column justify-center'>
-					<button tabIndex={0} onClick={() => { window.location.href = "/gallery" }} className='return-button'>
+            <div onKeyDown={handleGalleryEscape} className='flex flex-row'>
+                <div className='flex flex-column justify-center'>
+                    <button tabIndex={0} onClick={() => { window.location.href = "/gallery" }} className='return-button'>
                         <p>Return to Gallery ⬇️</p>
                     </button>
                 </div>
