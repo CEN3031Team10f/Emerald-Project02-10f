@@ -1,12 +1,10 @@
-//@ts-check
-
 import React from 'react';
 import { Button } from 'antd';
 
 
 /**
  * 
- * @param {React.Dispatch<React.SetStateAction<boolean>>} setExpand setter for boolean which determines to show the fork editor or not
+ * @param {React.Dispatch<React.SetStateAction<boolean>>} setExpand 
  * @returns 
  */
 function Fork({ setExpand }) {

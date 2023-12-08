@@ -15,7 +15,6 @@ import { Button } from 'antd';
 const GalleryItemExpanded = () => {
     const path = window.location.pathname;
     const galleryId = path.substring(path.lastIndexOf("/item/") + 6).replace(/\D/g, '');
-    const [galleryObject, setGalleryObject] = useState({});
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
     const [expand, setExpand] = useState(false);
@@ -39,7 +38,6 @@ const GalleryItemExpanded = () => {
             setRender(notFoundMessage);
             return;
         }
-        setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
         localStorage.setItem('gallery-xml', (response.data.xml_text));
         await updateViewCount(response.data.id, response.data.view_count + 1);
