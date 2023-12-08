@@ -16,10 +16,13 @@ function Share({ title }) {
 		setButtonMessage('Copy the link!');
 	};
 
-	function handleShare(e) {
+	/**
+	 * Opens the native share dialog if the browser supports it, otherwise opens a modal
+	 */
+	function handleShare() {
 		const shareData = {
-			title: 'CASMM: ' + title,
-			text: 'Check out this awesome code I made using CASMM!',
+			title: 'Code Sparks: ' + title,
+			text: 'Check out this awesome code I made using Code Sparks!',
 			url: shareLink,
 		};
 		if (navigator.canShare(shareData)) {
@@ -30,6 +33,9 @@ function Share({ title }) {
 		}
 	}
 
+	/**
+	 * Copies the share link to the user's clipboard and update button message
+	 */
 	function handleCopyClick() {
 		navigator.clipboard.writeText(shareLink)
 			.then(() => {
@@ -42,7 +48,7 @@ function Share({ title }) {
 
 	return (
 		<>
-			<Button title='Share this project' className="share-button" onClick={(e) => { handleShare(e) }}>
+			<Button title='Share this project' className="share-button" onClick={() => { handleShare() }}>
 				<i className='fa fa-share' />
 			</Button>
 

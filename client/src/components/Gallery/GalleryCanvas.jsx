@@ -5,7 +5,6 @@ import CodeModal from '../ActivityPanels/BlocklyCanvasPanel/modals/CodeModal';
 import ConsoleModal from '../ActivityPanels/BlocklyCanvasPanel/modals/ConsoleModal';
 import PlotterModal from '../ActivityPanels/BlocklyCanvasPanel/modals/PlotterModal';
 import {
-    connectToPort,
     handleCloseConnection,
     handleOpenConnection,
 } from '../ActivityPanels/Utils/consoleHelpers';
@@ -15,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import GalleryObjectForm from './GalleryObjectForm';
 import './GalleryCanvas.less';
 import Toolbox from './Toolbox.json';
+//import the entire toolbox from the json file, since we don't store an Activity object
 
 let plotId = 1;
 
@@ -23,7 +23,6 @@ export default function GalleryCanvas({ editing }) {
     const [hoverUndo, setHoverUndo] = useState(false);
     const [hoverRedo, setHoverRedo] = useState(false);
     const [hoverCompile, setHoverCompile] = useState(false);
-    const [hoverImage, setHoverImage] = useState(false);
     const [hoverConsole, setHoverConsole] = useState(false);
     const [showConsole, setShowConsole] = useState(false);
     const [showPlotter, setShowPlotter] = useState(false);
@@ -31,9 +30,7 @@ export default function GalleryCanvas({ editing }) {
     const [connectionOpen, setConnectionOpen] = useState(false);
     const [selectedCompile, setSelectedCompile] = useState(false);
     const [compileError, setCompileError] = useState('');
-    const [saves, setSaves] = useState({});
     const [lastSavedTime, setLastSavedTime] = useState(null);
-    const [lastAutoSave, setLastAutoSave] = useState(null);
 
     const [forceUpdate] = useReducer((x) => x + 1, 0);
     const navigate = useNavigate();
@@ -47,39 +44,6 @@ export default function GalleryCanvas({ editing }) {
             toolbox: document.getElementById('toolbox'),
         });
         window.Blockly.addChangeListener(blocklyEvent);
-    };
-
-    const loadSave = (selectedSave) => {
-        try {
-            // let toLoad = activity.template;
-            let toLoad = localStorage.getItem('gallery-xml');
-            if (selectedSave !== -1) {
-                if (lastAutoSave && selectedSave === -2) {
-                    toLoad = lastAutoSave.workspace;
-                    setLastSavedTime(getFormattedDate(lastAutoSave.updated_at));
-                } else if (saves.current && saves.current.id === selectedSave) {
-                    toLoad = saves.current.workspace;
-                    setLastSavedTime(getFormattedDate(saves.current.updated_at));
-                } else {
-                    const s = saves.past.find((save) => save.id === selectedSave);
-                    if (s) {
-                        toLoad = s.workspace;
-                        setLastSavedTime(getFormattedDate(s.updated_at));
-                    } else {
-                        message.error('Failed to restore save.');
-                        return;
-                    }
-                }
-            } else {
-                setLastSavedTime(null);
-            }
-            let xml = window.Blockly.Xml.textToDom(toLoad);
-            if (workspaceRef.current) workspaceRef.current.clear();
-            window.Blockly.Xml.domToWorkspace(xml, workspaceRef.current);
-            workspaceRef.current.clearUndo();
-        } catch (e) {
-            message.error('Failed to load save.');
-        }
     };
 
     const pushEvent = (type, blockId = '') => {
@@ -154,28 +118,6 @@ export default function GalleryCanvas({ editing }) {
         }, 500);
     };
 
-    // useEffect(() => {
-    //     // automatically save workspace every min
-    //     let autosaveInterval = setInterval(async () => {
-    //         if (workspaceRef.current && activityRef.current) {
-    //             const res = await handleSave(
-    //                 activityRef.current.id,
-    //                 workspaceRef,
-    //                 replayRef.current
-    //             );
-    //             if (res.data) {
-    //                 setLastAutoSave(res.data[0]);
-    //                 setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-    //             }
-    //         }
-    //     }, 60000);
-
-    //     // clean up - saves workspace and removes blockly div from DOM
-    //     return async () => {
-    //         clearInterval(autosaveInterval);
-    //     };
-    // }, []);
-
     useEffect(() => {
         // once the activity state is set, set the workspace and save
         const setUp = async () => {
@@ -184,13 +126,6 @@ export default function GalleryCanvas({ editing }) {
                 setWorkspace();
 
                 let onLoadSave = null;
-                // const res = await getSaves(activity.id);
-                // if (res.data) {
-                //     if (res.data.current) onLoadSave = res.data.current;
-                //     setSaves(res.data);
-                // } else {
-                //     console.log(res.err);
-                // }
 
                 if (localStorage.getItem('gallery-xml')) {
                     let xml = window.Blockly.Xml.textToDom(localStorage.getItem('gallery-xml'));
@@ -208,19 +143,6 @@ export default function GalleryCanvas({ editing }) {
 
     const handleManualSave = async () => {
         alert("Saving is not currently supported for forked projects.")
-        //     console.log('workspace from student', workspaceRef);
-        //     // save workspace then update load save options
-        //     pushEvent('save');
-        //     const res = await handleSave(activity.id, workspaceRef, replayRef.current);
-        //     if (res.err) {
-        //         message.error(res.err);
-        //     } else {
-        //         setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-        //         message.success('Workspace saved successfully.');
-        //     }
-
-        //     const savesRes = await getSaves(activity.id);
-        //     if (savesRes.data) setSaves(savesRes.data);
     };
 
     const handleUndo = () => {
@@ -298,28 +220,6 @@ export default function GalleryCanvas({ editing }) {
     };
     const handleCompile = async () => {
         alert("Compiling is not currently supported for forked projects.")
-        // if (showConsole || showPlotter) {
-        //     message.warning(
-        //         'Close Serial Monitor and Serial Plotter before uploading your code'
-        //     );
-        // } else {
-        //     if (typeof window['port'] === 'undefined') {
-        //         await connectToPort();
-        //     }
-        //     if (typeof window['port'] === 'undefined') {
-        //         message.error('Fail to select serial device');
-        //         return;
-        //     }
-        //     setCompileError('');
-        //     await compileArduinoCode(
-        //         workspaceRef.current,
-        //         setSelectedCompile,
-        //         setCompileError,
-        //         activity,
-        //         true
-        //     );
-        //     pushEvent('compile');
-        // }
     };
 
     const handleGoBack = () => {
@@ -360,14 +260,6 @@ export default function GalleryCanvas({ editing }) {
                         <Col flex={'350px'}>
                             <Row>
                                 <Col className='flex flex-row' id='icon-align'>
-                                    {/* <VersionHistoryModal
-                                saves={saves}
-                                lastAutoSave={lastAutoSave}
-                                defaultTemplate={activity}
-                                getFormattedDate={getFormattedDate}
-                                loadSave={loadSave}
-                                pushEvent={pushEvent}
-                            /> */}
                                     <button
                                         onClick={handleManualSave}
                                         id='link'

@@ -10,15 +10,16 @@ import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
 import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 
 const GalleryItemExpanded = () => {
     const path = window.location.pathname;
     const galleryId = path.substring(path.lastIndexOf("/item/") + 6).replace(/\D/g, '');
-    const [galleryObject, setGalleryObject] = useState({});
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
     const [expand, setExpand] = useState(false);
+    const navigate = useNavigate();
 
 
     const notFoundMessage = (
@@ -28,13 +29,17 @@ const GalleryItemExpanded = () => {
             </div>
         </div>);
 
+    /**
+     * Fetches gallery item based on galleryId, which is determined by the URL
+     * Example: /gallery/item/8 fetches gallery item with id = 8
+     * @returns void
+     */
     async function fetchObject() {
         const response = await getGalleryObject(galleryId);
         if (!response.data || response.data === null) {
             setRender(notFoundMessage);
             return;
         }
-        setGalleryObject(response.data);
         setTitleHeading(response.data.Title);
         localStorage.setItem('gallery-xml', (response.data.xml_text));
         await updateViewCount(response.data.id, response.data.view_count + 1);
@@ -53,7 +58,7 @@ const GalleryItemExpanded = () => {
                     </div>
                     <div className='flex flex-row justify-end buttons-row'>
                         <div className='flex flex-column'>
-                            <Fork galleryObject={response.data} setExpand={setExpand} />
+                            <Fork setExpand={setExpand} />
                             <Share title={response.data.Title} />
                             <Like likeCount={response.data} />
                         </div>
@@ -63,9 +68,13 @@ const GalleryItemExpanded = () => {
         );
     }
 
+    /**
+     * Replicate modal functionality, where esc key goes back to gallery
+     * @param {KeyboardEvent} event 
+     */
     function handleGalleryEscape(event) {
-        if (event.keyCode === 27) {
-            window.location.href = '/gallery/';
+        if (event.code === "Escape") {
+            navigate('/gallery/');
         }
     }
 
