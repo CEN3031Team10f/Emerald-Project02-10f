@@ -11,9 +11,17 @@ const GalleryItem = (props) => {
     const id = props.id || 0;
     const [viewCounts, setViewCounts] = useState(viewCount);
     const type = props.type || 'Type';
+
+    /** 
+     * This used to show a modal, but now it just redirects to the item page
+    */
     const showModal = () => {
         window.location.href = `/gallery/item/${id}`;
     };
+    /**
+     * If enter key is pressed, open object
+     * @param {KeyboardEvent} event 
+     */
     function handleItemEnterKeydown(event) {
         if (event.keyCode === 13) {
             showModal();

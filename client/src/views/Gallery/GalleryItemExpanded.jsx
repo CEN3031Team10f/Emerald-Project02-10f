@@ -28,11 +28,11 @@ const GalleryItemExpanded = () => {
             </div>
         </div>);
 
-        /**
-         * Fetches gallery item based on galleryId, which is determined by the URL
-         * Example: /gallery/item/8 fetches gallery item with id = 8
-         * @returns void
-         */
+    /**
+     * Fetches gallery item based on galleryId, which is determined by the URL
+     * Example: /gallery/item/8 fetches gallery item with id = 8
+     * @returns void
+     */
     async function fetchObject() {
         const response = await getGalleryObject(galleryId);
         if (!response.data || response.data === null) {
@@ -58,7 +58,7 @@ const GalleryItemExpanded = () => {
                     </div>
                     <div className='flex flex-row justify-end buttons-row'>
                         <div className='flex flex-column'>
-                            <Fork galleryObject={response.data} setExpand={setExpand} />
+                            <Fork setExpand={setExpand} />
                             <Share title={response.data.Title} />
                             <Like likeCount={response.data} />
                         </div>
