@@ -8,8 +8,6 @@ import { Button } from 'antd';
  * @returns 
  */
 function Fork({ setExpand }) {
-
-
 	return (
 
 		<Button title='Fork this Project' className="fork-button" onClick={() => { setExpand(true) }}>
