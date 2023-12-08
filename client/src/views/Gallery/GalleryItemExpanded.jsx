@@ -10,7 +10,7 @@ import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
 import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
 import { Button } from 'antd';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const GalleryItemExpanded = () => {
