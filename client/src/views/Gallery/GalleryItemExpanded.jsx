@@ -10,6 +10,7 @@ import './GalleryItemExpanded.less';
 import UpdateVisibilityForm from '../../components/Gallery/UpdateVisibilityForm';
 import GalleryCanvas from '../../components/Gallery/GalleryCanvas';
 import { Button } from 'antd';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const GalleryItemExpanded = () => {
@@ -18,6 +19,7 @@ const GalleryItemExpanded = () => {
     const [render, setRender] = useState(<p>Loading...</p>);
     const [titleHeading, setTitleHeading] = useState("Gallery Item Expanded");
     const [expand, setExpand] = useState(false);
+    const navigate = useNavigate();
 
 
     const notFoundMessage = (
@@ -71,8 +73,8 @@ const GalleryItemExpanded = () => {
      * @param {KeyboardEvent} event 
      */
     function handleGalleryEscape(event) {
-        if (event.keyCode === 27) {
-            window.location.href = '/gallery/';
+        if (event.code === "Escape") {
+            navigate('/gallery/');
         }
     }
 

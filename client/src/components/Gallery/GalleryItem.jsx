@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import thumbnailImage from './thumbnail.png';
+import { useNavigate } from 'react-router-dom';
 //Wrapper item needs to be a useState for it to get dynamically rendered
 const GalleryItem = (props) => {
-    const [visible, setVisible] = useState(false);
     const title = props.Title || 'Title';
     const creator = props.User_name || 'Creator Name';
     const likeCount = props.like_count || 0;
@@ -11,19 +11,20 @@ const GalleryItem = (props) => {
     const id = props.id || 0;
     const [viewCounts, setViewCounts] = useState(viewCount);
     const type = props.type || 'Type';
+    const navigate = useNavigate();
 
     /** 
      * This used to show a modal, but now it just redirects to the item page
     */
     const showModal = () => {
-        window.location.href = `/gallery/item/${id}`;
+        navigate(`/gallery/item/${id}`);
     };
     /**
      * If enter key is pressed, open object
      * @param {KeyboardEvent} event 
      */
     function handleItemEnterKeydown(event) {
-        if (event.keyCode === 13) {
+        if (event.code === "NumpadEnter" || event.code === "Enter") {
             showModal();
         }
     }
