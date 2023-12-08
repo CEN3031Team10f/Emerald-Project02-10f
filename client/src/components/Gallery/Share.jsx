@@ -48,7 +48,7 @@ function Share({ title }) {
 
 	return (
 		<>
-			<Button title='Share this project' className="share-button" onClick={(e) => { handleShare(e) }}>
+			<Button title='Share this project' className="share-button" onClick={() => { handleShare() }}>
 				<i className='fa fa-share' />
 			</Button>
 
