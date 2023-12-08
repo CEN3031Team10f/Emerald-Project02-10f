@@ -154,28 +154,6 @@ export default function GalleryCanvas({ editing }) {
         }, 500);
     };
 
-    // useEffect(() => {
-    //     // automatically save workspace every min
-    //     let autosaveInterval = setInterval(async () => {
-    //         if (workspaceRef.current && activityRef.current) {
-    //             const res = await handleSave(
-    //                 activityRef.current.id,
-    //                 workspaceRef,
-    //                 replayRef.current
-    //             );
-    //             if (res.data) {
-    //                 setLastAutoSave(res.data[0]);
-    //                 setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-    //             }
-    //         }
-    //     }, 60000);
-
-    //     // clean up - saves workspace and removes blockly div from DOM
-    //     return async () => {
-    //         clearInterval(autosaveInterval);
-    //     };
-    // }, []);
-
     useEffect(() => {
         // once the activity state is set, set the workspace and save
         const setUp = async () => {
@@ -208,19 +186,6 @@ export default function GalleryCanvas({ editing }) {
 
     const handleManualSave = async () => {
         alert("Saving is not currently supported for forked projects.")
-        //     console.log('workspace from student', workspaceRef);
-        //     // save workspace then update load save options
-        //     pushEvent('save');
-        //     const res = await handleSave(activity.id, workspaceRef, replayRef.current);
-        //     if (res.err) {
-        //         message.error(res.err);
-        //     } else {
-        //         setLastSavedTime(getFormattedDate(res.data[0].updated_at));
-        //         message.success('Workspace saved successfully.');
-        //     }
-
-        //     const savesRes = await getSaves(activity.id);
-        //     if (savesRes.data) setSaves(savesRes.data);
     };
 
     const handleUndo = () => {
@@ -298,28 +263,6 @@ export default function GalleryCanvas({ editing }) {
     };
     const handleCompile = async () => {
         alert("Compiling is not currently supported for forked projects.")
-        // if (showConsole || showPlotter) {
-        //     message.warning(
-        //         'Close Serial Monitor and Serial Plotter before uploading your code'
-        //     );
-        // } else {
-        //     if (typeof window['port'] === 'undefined') {
-        //         await connectToPort();
-        //     }
-        //     if (typeof window['port'] === 'undefined') {
-        //         message.error('Fail to select serial device');
-        //         return;
-        //     }
-        //     setCompileError('');
-        //     await compileArduinoCode(
-        //         workspaceRef.current,
-        //         setSelectedCompile,
-        //         setCompileError,
-        //         activity,
-        //         true
-        //     );
-        //     pushEvent('compile');
-        // }
     };
 
     const handleGoBack = () => {

@@ -28,6 +28,11 @@ const GalleryItemExpanded = () => {
             </div>
         </div>);
 
+        /**
+         * Fetches gallery item based on galleryId, which is determined by the URL
+         * Example: /gallery/item/8 fetches gallery item with id = 8
+         * @returns void
+         */
     async function fetchObject() {
         const response = await getGalleryObject(galleryId);
         if (!response.data || response.data === null) {
@@ -63,6 +68,10 @@ const GalleryItemExpanded = () => {
         );
     }
 
+    /**
+     * Replicate modal functionality, where esc key goes back to gallery
+     * @param {KeyboardEvent} event 
+     */
     function handleGalleryEscape(event) {
         if (event.keyCode === 27) {
             window.location.href = '/gallery/';

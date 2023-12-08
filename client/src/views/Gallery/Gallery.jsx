@@ -19,6 +19,11 @@ const Gallery = () => {
     const [renderedGalleryItems, setRenderedGalleryItems] = useState(undefined);
     const [loadedGalleryItems, setLoadedGalleryItems] = useState(undefined);
 
+    /**
+     * Search box functionality
+     * @param {string} value search keyword
+     * @param {React.JSX.Element[]} loadedGalleryItems 
+     */
     function filterUpdate(value, loadedGalleryItems) {
         const filteredGalleryItems = loadedGalleryItems?.filter((item) => {
             return item.props.Title.toLowerCase().includes(value.toLowerCase()) || item.props.User_name.toLowerCase().includes(value.toLowerCase());
@@ -77,6 +82,10 @@ const Gallery = () => {
         });
     }
 
+    /**
+     * Pass in the Gallery Items and update the useState with them organized into rows
+     * @param {React.JSX.Element[]} items 
+     */
     function renderInRows(items) {
         let rows = [];
         let row = [];
