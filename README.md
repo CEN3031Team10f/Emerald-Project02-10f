@@ -59,6 +59,7 @@ The development environment is composed of five servers. The first one is run wi
 2. Run `docker compose up` from `/`
 
    > Grant permission to the **scripts** and **server** directories if you are prompted
+3. Edit Strapi admin roles as seen fit. For testing, we allowed all roles to have access to every function in the 3 backend points we created (gallery-posts, unpinned-comments, pinned-comements).
    
 
 ### Staging
